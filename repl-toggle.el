@@ -1,15 +1,12 @@
-;;; repl-toggle.el --- switch to/from repl buffer, major-mode dependend.
+;;; repl-toggle.el --- Switch to/from repl buffer for current major-mode
 
 ;; Copyright (C) 2013 Tom Regner
 
-;;
-;; Author: Tom Regner
+;; Author: Tom Regner <tom@goochesa.de>
 ;; Maintainer: Tom Regner <tom@goochesa.de>
-;;
 ;; Version: 0.0.1
-;; Keywords: repl, buffer switch, toggle
-;; Requires: 
-;;
+;; Keywords: repl, buffers, toggle
+
 ;;  This file is NOT part of GNU Emacs
 
 ;;  This program is free software: you can redistribute it and/or modify
@@ -42,7 +39,7 @@
 ;;     (require 'repl-toggle)
 ;;     (rtog/add-repl 'php-mode 'php-boris ) 
 ;;     (rtog/add-repl 'emacs-lisp-mode 'ielm ) 
-;;     (global-set-key (kbd "C-c C-t") 'rtog/toggle-repl)
+;;     (global-set-key (kbd "C-c C-z") 'rtog/toggle-repl)
 ;; 
 ;; 
 ;; Code:
@@ -77,12 +74,15 @@ switch to an already running process."
 	  (setq rtog/--last-buffer --buffer))))
 
 ;; interactive functions
+
+;;;###autoload
 (defun rtog/add-repl (mode repl-cmd)
   "If in a buffer with major-mode MODE, execute REPL-CMD when
   rtog/roggle-rep is called."
   (interactive "Mmajor mode? \narepl function? ")
   (puthash mode repl-cmd rtog/mode-repl-map))
 
+;;;###autoload
 (defun rtog/toggle-repl ()
   "Switch to the repl asscociated with the major mode of the
 current buffer. If in a repl already switch back to the buffer we
