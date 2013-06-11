@@ -40,8 +40,8 @@
 ;; like the following in your emacs setup for php and elisp repl:
 ;;
 ;;     (require 'repl-toggle)
-;;     (puthash 'php-mode 'php-boris rtog/mode-repl-map ) 
-;;     (puthash 'emacs-lisp-mode 'ielm rtog/mode-repl-map ) 
+;;     (rtog/add-repl 'php-mode 'php-boris ) 
+;;     (rtog/add-repl 'emacs-lisp-mode 'ielm ) 
 ;;     (global-set-key (kbd "C-c C-t") 'rtog/toggle-repl)
 ;; 
 ;; 
@@ -54,6 +54,7 @@
   "store the jump source in repl buffer")
 (make-variable-buffer-local 'rtog/--last-buffer) 
 
+;; internal functions
 (defun rtog/--switch-to-buffer ()
   "If `rtog/--last-buffer` is non nil, switch to the buffer
 identified by it."
@@ -74,6 +75,13 @@ switch to an already running process."
 	(progn
 	  (funcall --mode-cmd)
 	  (setq rtog/--last-buffer --buffer))))
+
+;; interactive functions
+(defun rtog/add-repl (mode repl-cmd)
+  "If in a buffer with major-mode MODE, execute REPL-CMD when
+  rtog/roggle-rep is called."
+  (interactive "Mmajor mode? \narepl function? ")
+  (puthash mode repl-cmd rtog/mode-repl-map))
 
 (defun rtog/toggle-repl ()
   "Switch to the repl asscociated with the major mode of the

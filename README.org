@@ -16,7 +16,7 @@ the following in your emacs setup for php and elisp repl:
 
 #+BEGIN_SRC emacs-lisp
   (require 'repl-toggle)
-  (puthash 'php-mode 'php-boris rtog/mode-repl-map ) 
-  (puthash 'emacs-lisp-mode 'ielm rtog/mode-repl-map ) 
+  (rtog/add-repl 'php-mode 'php-boris ) 
+  (rtog/add-repl 'emacs-lisp-mode 'ielm ) 
   (global-set-key (kbd "C-c C-t") 'rtog/toggle-repl)
 #+END_SRC
