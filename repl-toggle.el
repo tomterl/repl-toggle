@@ -119,7 +119,7 @@ came from."
 
 ;; hook into comint modes no matter what
 (defun rtog/activate ()
-  "Activate the repl-roggle minor mode."
+  "Activate the repl-toggle minor mode."
   (repl-toggle-mode 1))
 
 (add-hook 'comint-mode-hook 'rtog/activate)
