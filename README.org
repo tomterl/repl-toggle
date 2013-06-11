@@ -14,8 +14,9 @@ switch to an already open repl buffer if it exists.
 There are no repl/mode combinations preconfigured, put something like
 the following in your emacs setup for php and elisp repl:
 
-
-    (require 'repl-toggle)
-    (puthash 'php-mode 'php-boris rtog/mode-repl-map ) 
-    (puthash 'emacs-lisp-mode 'ielm rtog/mode-repl-map ) 
-    (global-set-key (kbd "C-c C-t") 'rtog/toggle-repl)
+#+BEGIN_SRC emacs-lisp
+  (require 'repl-toggle)
+  (puthash 'php-mode 'php-boris rtog/mode-repl-map ) 
+  (puthash 'emacs-lisp-mode 'ielm rtog/mode-repl-map ) 
+  (global-set-key (kbd "C-c C-t") 'rtog/toggle-repl)
+#+END_SRC
