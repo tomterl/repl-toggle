@@ -38,11 +38,13 @@
 ;;
 ;;     (require 'repl-toggle)
 ;;     (setq rtog/mode-repl-alist '((php-mode . php-boris) (emacs-lisp-mode . ielm)))
-;;     (global-set-key (kbd "C-c C-t") 'rtog/toggle-repl)
 ;; 
-;; Or use the more common keybinding
-;;     
-;;     (global-set-key (kbd "C-c C-z") 'rtog/toggle-repl)
+;; This defines a global minor mode, indicated at with 'rt' in the modeline, that
+;; grabs "C-c C-z" as repl toggling keybinding.
+;;
+;; I don't know with wich repl modes this actualy works. If you use
+;; this mode, please tell me your rtog/mode-repl-alist, so that I can
+;; update the documentation.
 ;;
 ;; Code:
 
@@ -54,6 +56,22 @@ modes with a repl command."
   :type '(alist :key-type symbol :value-type function)
   :group 'repl-toggle)
 
+;; minor mode
+(defvar repl-toggle-mode-map
+  (let ((m (make-sparse-keymap)))
+    (define-key m (kbd "C-c C-z") 'rtog/toggle-repl)
+   m)
+  "Keymap for `repl-toggle-mode'.")
+
+;;;###autoload
+(define-minor-mode repl-toggle-mode
+  "A minor mode to allow uniform repl buffer switching."
+  nil
+  :lighter " rt"
+  :keymap repl-toggle-mode-map
+  :global t)
+
+;; variables
 (defvar rtog/--last-buffer nil
   "store the jump source in repl buffer")
 (make-variable-buffer-local 'rtog/--last-buffer) 
@@ -98,7 +116,6 @@ came from."
   (if rtog/--last-buffer
 	  (rtog/--switch-to-buffer)
 	(rtog/--switch-to-repl)))
-
 
 (provide 'repl-toggle)
 
