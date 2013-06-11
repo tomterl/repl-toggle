@@ -4,7 +4,7 @@
 
 ;; Author: Tom Regner <tom@goochesa.de>
 ;; Maintainer: Tom Regner <tom@goochesa.de>
-;; Version: 0.0.5
+;; Version: 0.0.6
 ;; Keywords: repl, buffers, toggle
 
 ;;  This file is NOT part of GNU Emacs
@@ -82,8 +82,7 @@ modes with a repl command."
 identified by it."
   (if (and rtog/--last-buffer
 		   (buffer-live-p rtog/--last-buffer))
-	  (let ((--buffer rtog/--last-buffer))
-		(switch-to-buffer --buffer))
+	  (switch-to-buffer rtog/--last-buffer)
 	(setq rtog/--last-buffer nil)))
 
 
