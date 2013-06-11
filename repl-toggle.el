@@ -4,7 +4,7 @@
 
 ;; Author: Tom Regner <tom@goochesa.de>
 ;; Maintainer: Tom Regner <tom@goochesa.de>
-;; Version: 0.0.1
+;; Version: 0.0.2
 ;; Keywords: repl, buffers, toggle
 
 ;;  This file is NOT part of GNU Emacs
@@ -37,15 +37,22 @@
 ;; like the following in your emacs setup for php and elisp repl:
 ;;
 ;;     (require 'repl-toggle)
-;;     (rtog/add-repl 'php-mode 'php-boris ) 
-;;     (rtog/add-repl 'emacs-lisp-mode 'ielm ) 
+;;     (setq rtog/mode-repl-alist '((php-mode . php-boris) (emacs-lisp-mode . ielm)))
+;;     (global-set-key (kbd "C-c C-t") 'rtog/toggle-repl)
+;; 
+;; Or use the more common keybinding
+;;     
 ;;     (global-set-key (kbd "C-c C-z") 'rtog/toggle-repl)
-;; 
-;; 
+;;
 ;; Code:
 
-(defvar rtog/mode-repl-map (make-hash-table)
-  "major-mode => repl-command")
+;; customization
+
+(defcustom rtog/mode-repl-alist ()
+  "List of cons `(major-mode . repl-command)`, associating major
+modes with a repl command."
+  :type '(alist :key-type symbol :value-type function)
+  :group 'repl-toggle)
 
 (defvar rtog/--last-buffer nil
   "store the jump source in repl buffer")
@@ -68,7 +75,7 @@ of the current buffer, call the value as function.
 This assumes that the command executed will start a new repl, or
 switch to an already running process."
   (let ((--buffer (current-buffer))
-		(--mode-cmd (gethash major-mode rtog/mode-repl-map nil)))
+		(--mode-cmd  (cdr (assoc major-mode rtog/mode-repl-alist ))))
 	(progn
 	  (funcall --mode-cmd)
 	  (setq rtog/--last-buffer --buffer))))
@@ -80,7 +87,7 @@ switch to an already running process."
   "If in a buffer with major-mode MODE, execute REPL-CMD when
   rtog/roggle-rep is called."
   (interactive "Mmajor mode? \narepl function? ")
-  (puthash mode repl-cmd rtog/mode-repl-map))
+  (add-to-list rtog/mode-repl-alist '(mode . repl-cmd) ))
 
 ;;;###autoload
 (defun rtog/toggle-repl ()
