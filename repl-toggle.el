@@ -80,7 +80,7 @@ modes with a repl command."
 (defun rtog/--switch-to-buffer ()
   "If `rtog/--last-buffer` is non nil, switch to the buffer
 identified by it."
-  (if (and (rtog/--last-buffer)
+  (if (and rtog/--last-buffer
 		   (buffer-live-p rtog/--last-buffer))
 	  (let ((--buffer rtog/--last-buffer))
 		(switch-to-buffer --buffer))
@@ -118,6 +118,12 @@ came from."
 	  (rtog/--switch-to-buffer)
 	(rtog/--switch-to-repl)))
 
+;; hook into comint modes no matter what
+(defun rtog/activate ()
+  "Activate the repl-roggle minor mode."
+  (repl-toggle-mode 1))
+
+(add-hook 'comint-mode-hook 'rtog/activate)
 (provide 'repl-toggle)
 
 ;;; repl-toggle.el ends here
