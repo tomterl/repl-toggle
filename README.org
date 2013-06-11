@@ -21,7 +21,7 @@ the following in your emacs setup for php and elisp repl:
 
 This defines a global minor mode, indicated at with 'rt' in the modeline, that
 grabs "C-c C-z" as repl toggling keybinding.
-I don't know with wich repl modes this actualy works. If you use
+I don't know with which repl modes this actualy works. If you use
 this mode, please tell me your rtog/mode-repl-alist, so that I can
 update the documentation.
 
