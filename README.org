@@ -25,3 +25,8 @@ I don't know with which repl modes this actualy works. If you use
 this mode, please tell me your rtog/mode-repl-alist, so that I can
 update the documentation.
 
+Known to work:
+
+- ~(php-mode . php-boris)~
+- ~(emacs-lisp-mode . ielm)~
+- ~(exlixir-mode . elixir-mode-iex)~
