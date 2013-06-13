@@ -103,7 +103,7 @@ switch to an already running process."
 ;;;###autoload
 (defun rtog/add-repl (mode repl-cmd)
   "If in a buffer with major-mode MODE, execute REPL-CMD when
-  rtog/roggle-rep is called."
+  `rtog/toggle-repl is called´."
   (interactive "Mmajor mode? \narepl function? ")
   (add-to-list rtog/mode-repl-alist '(mode . repl-cmd) ))
 
