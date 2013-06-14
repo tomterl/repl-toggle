@@ -94,9 +94,10 @@ This assumes that the command executed will start a new repl, or
 switch to an already running process."
   (let ((--buffer (current-buffer))
 		(--mode-cmd  (cdr (assoc major-mode rtog/mode-repl-alist ))))
-	(progn
-	  (funcall --mode-cmd)
-	  (setq rtog/--last-buffer --buffer))))
+	(if (and --mode-cmd (functionp --mode-cmd))
+		(progn 
+		  (funcall --mode-cmd)
+		  (setq rtog/--last-buffer --buffer)))))
 
 ;; interactive functions
 
