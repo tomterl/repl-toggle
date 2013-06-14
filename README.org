@@ -29,4 +29,4 @@ Known to work:
 
 - ~(php-mode . php-boris)~
 - ~(emacs-lisp-mode . ielm)~
-- ~(exlixir-mode . elixir-mode-iex)~
+- ~(elixir-mode . elixir-mode-iex)~
