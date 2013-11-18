@@ -30,3 +30,12 @@ Known to work:
 - ~(php-mode . php-boris)~
 - ~(emacs-lisp-mode . ielm)~
 - ~(elixir-mode . elixir-mode-iex)~
+- ~(ruby-mode . inf-ruby)~
+
+If you supply the universal prefix argument you can
+
+- C-u pass the current line
+- C-u C-u pass the current defun
+- C-u C-u C-u pass the the whole current buffer
+
+to the repl buffer you switch to.
