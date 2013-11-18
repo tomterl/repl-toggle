@@ -4,7 +4,7 @@
 
 ;; Author: Tom Regner <tom@goochesa.de>
 ;; Maintainer: Tom Regner <tom@goochesa.de>
-;; Version: 0.0.6
+;; Version: 0.0.7
 ;; Keywords: repl, buffers, toggle
 
 ;;  This file is NOT part of GNU Emacs
@@ -77,6 +77,19 @@ modes with a repl command."
 (make-variable-buffer-local 'rtog/--last-buffer) 
 
 ;; internal functions
+
+(defun rtog/pass-code (passAlong?)
+  "Depending on PASSALONG? return the current line or region,
+function or definition or the whole current buffer." 
+  (case passAlong?
+	(4 (if (use-region-p)
+		   (buffer-substring-no-properties
+			(region-beginning)
+			(region-end))
+		 (thing-at-point 'line)))
+	(16 (thing-at-point 'defun))
+	(64 (buffer-substring-no-properties (point-min) (point-max)))))
+
 (defun rtog/--switch-to-buffer ()
   "If `rtog/--last-buffer` is non nil, switch to the buffer
 identified by it."
@@ -86,18 +99,23 @@ identified by it."
 	(setq rtog/--last-buffer nil)))
 
 
-(defun rtog/--switch-to-repl ()
+(defun rtog/--switch-to-repl (&optional code &rest ignored)
   "If `rtog/mode-repl-map` contains an entry for the `major-mode`
 of the current buffer, call the value as function.
 
 This assumes that the command executed will start a new repl, or
-switch to an already running process."
+switch to an already running process.
+ 
+Any text passed as CODE will be pasted in the repl buffer.
+"
   (let ((--buffer (current-buffer))
 		(--mode-cmd  (cdr (assoc major-mode rtog/mode-repl-alist ))))
 	(if (and --mode-cmd (functionp --mode-cmd))
 		(progn 
 		  (funcall --mode-cmd)
-		  (setq rtog/--last-buffer --buffer)))))
+		  (setq rtog/--last-buffer --buffer)
+		  (if code
+			  (insert code))))))
 
 ;; interactive functions
 
@@ -109,14 +127,20 @@ switch to an already running process."
   (add-to-list rtog/mode-repl-alist '(mode . repl-cmd) ))
 
 ;;;###autoload
-(defun rtog/toggle-repl ()
+(defun rtog/toggle-repl (&optional passAlong? &rest ignored)
   "Switch to the repl asscociated with the major mode of the
 current buffer. If in a repl already switch back to the buffer we
-came from."
-  (interactive)
+came from.
+
+If you provide a prefix with C-u, the current line or region is
+passed to the repl buffer, using C-u C-u the current function or
+definition is passed, and finaly using C-u C-u C-u you can pass
+the whole current buffer.
+"
+  (interactive "p")
   (if rtog/--last-buffer
 	  (rtog/--switch-to-buffer)
-	(rtog/--switch-to-repl)))
+	(rtog/--switch-to-repl (rtog/pass-code passAlong?))))
 
 ;; hook into comint modes no matter what
 (defun rtog/activate ()
