@@ -4,7 +4,7 @@
 
 ;; Author: Tom Regner <tom@goochesa.de>
 ;; Maintainer: Tom Regner <tom@goochesa.de>
-;; Version: 0.0.7
+;; Version: 0.0.8
 ;; Keywords: repl, buffers, toggle
 
 ;;  This file is NOT part of GNU Emacs
