@@ -115,7 +115,9 @@ Any text passed as CODE will be pasted in the repl buffer.
 		  (funcall --mode-cmd)
 		  (setq rtog/--last-buffer --buffer)
 		  (if code
-			  (insert code))))))
+			  (progn 
+				(goto-char (point-max))
+				(insert code)))))))
 
 ;; interactive functions
 
