@@ -1,3 +1,5 @@
+* Switch from code buffers to the corresponding REPL
+
 This is a generalization of an idea by Mickey Petersen of
 masteringemacs fame:
 
@@ -25,17 +27,28 @@ I don't know with which repl modes this actualy works. If you use
 this mode, please tell me your rtog/mode-repl-alist, so that I can
 update the documentation.
 
-Known to work:
+** Configurations known to work
 
 - ~(php-mode . php-boris)~
 - ~(emacs-lisp-mode . ielm)~
 - ~(elixir-mode . elixir-mode-iex)~
 - ~(ruby-mode . inf-ruby)~
 
-If you supply the universal prefix argument you can
+** Pass code at point to the REPL
+
+If you supply the universal prefix argument to the switching function,
+you can
 
 - C-u pass the current line
 - C-u C-u pass the current defun
 - C-u C-u C-u pass the the whole current buffer
 
 to the repl buffer you switch to.
+
+** fullscreen REPL
+If you set =rtog/fullscreen= to true, /prior/ to loading this module,
+the repl-commands will be executed fullscreen, i.e. as single frame,
+restoring the window-layout on stwitching back to the originating
+buffer.
+
+~(setq rtog/fullscreen t)~

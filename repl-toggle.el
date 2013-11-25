@@ -4,8 +4,9 @@
 
 ;; Author: Tom Regner <tom@goochesa.de>
 ;; Maintainer: Tom Regner <tom@goochesa.de>
-;; Version: 0.0.8
+;; Version: 0.1.0
 ;; Keywords: repl, buffers, toggle
+;; Package-Requires: ((fullframe  "0.0.1"))
 
 ;;  This file is NOT part of GNU Emacs
 
@@ -46,15 +47,42 @@
 ;; this mode, please tell me your rtog/mode-repl-alist, so that I can
 ;; update the documentation.
 ;;
-;; Code:
+;; Known to work:
+;;
+;; - ~(php-mode . php-boris)~
+;; - ~(emacs-lisp-mode . ielm)~
+;; - ~(elixir-mode . elixir-mode-iex)~
+;; - ~(ruby-mode . inf-ruby)~
+;;
+;; If you supply the universal prefix argument you can
+;;
+;; - C-u pass the current line
+;; - C-u C-u pass the current defun
+;; - C-u C-u C-u pass the the whole current buffer
+;;
+;; to the repl buffer you switch to.
+;;
+;; If you set rtog/fullscreen to true, prior to loading this module,
+;; the repl-commands will be executed fullscreen, i.e. as single
+;; frame, restoring the window-layout on stwitching back to the
+;; buffer.
+;;
+;;; Code:
 
 ;; customization
+
+(defcustom rtog/fullscreen nil
+  "Show REPL-buffers as single frame. This setting must be true
+before this mode is loaded!"
+  :type '(boolean)
+  :group 'repl-toggle)
 
 (defcustom rtog/mode-repl-alist ()
   "List of cons `(major-mode . repl-command)`, associating major
 modes with a repl command."
   :type '(alist :key-type symbol :value-type function)
   :group 'repl-toggle)
+
 
 ;; minor mode
 (defvar repl-toggle-mode-map
@@ -71,6 +99,11 @@ modes with a repl command."
   :keymap repl-toggle-mode-map
   :global t)
 
+;; set fullscreen advice if wanted
+(eval-after-load "repl-toggle"
+  `(if rtog/fullscreen
+	   (efullscreen rtog/--switch-to-repl rtog/--switch-to-buffer :rtog-repl-fullscreen nil)))
+
 ;; variables
 (defvar rtog/--last-buffer nil
   "store the jump source in repl buffer")
@@ -80,7 +113,9 @@ modes with a repl command."
 
 (defun rtog/pass-code (passAlong?)
   "Depending on PASSALONG? return the current line or region,
-function or definition or the whole current buffer." 
+function or definition or the whole current buffer.
+
+Passing of the buffer respects narrowing." 
   (case passAlong?
 	(4 (if (use-region-p)
 		   (buffer-substring-no-properties
