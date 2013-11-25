@@ -89,7 +89,7 @@ modes with a repl command."
 (defvar repl-toggle-mode-map
   (let ((m (make-sparse-keymap)))
     (define-key m (kbd "C-c C-z") 'rtog/toggle-repl)
-   m)
+    m)
   "Keymap for `repl-toggle-mode'.")
 
 ;;;###autoload
@@ -118,21 +118,21 @@ function or definition or the whole current buffer.
 
 Passing of the buffer respects narrowing." 
   (case passAlong?
-	(4 (if (use-region-p)
-		   (buffer-substring-no-properties
-			(region-beginning)
-			(region-end))
-		 (thing-at-point 'line)))
-	(16 (thing-at-point 'defun))
-	(64 (buffer-substring-no-properties (point-min) (point-max)))))
+    (4 (if (use-region-p)
+           (buffer-substring-no-properties
+            (region-beginning)
+            (region-end))
+         (thing-at-point 'line)))
+    (16 (thing-at-point 'defun))
+    (64 (buffer-substring-no-properties (point-min) (point-max)))))
 
 (defun rtog/--switch-to-buffer ()
   "If `rtog/--last-buffer` is non nil, switch to the buffer
 identified by it."
   (if (and rtog/--last-buffer
-		   (buffer-live-p rtog/--last-buffer))
-	  (switch-to-buffer rtog/--last-buffer)
-	(setq rtog/--last-buffer nil)))
+           (buffer-live-p rtog/--last-buffer))
+      (switch-to-buffer rtog/--last-buffer)
+    (setq rtog/--last-buffer nil)))
 
 
 (defun rtog/--switch-to-repl (&optional code &rest ignored)
@@ -145,15 +145,15 @@ switch to an already running process.
 Any text passed as CODE will be pasted in the repl buffer.
 "
   (let ((--buffer (current-buffer))
-		(--mode-cmd  (cdr (assoc major-mode rtog/mode-repl-alist ))))
-	(if (and --mode-cmd (functionp --mode-cmd))
-		(progn 
-		  (funcall --mode-cmd)
-		  (setq rtog/--last-buffer --buffer)
-		  (if code
-			  (progn 
-				(goto-char (point-max))
-				(insert code)))))))
+        (--mode-cmd  (cdr (assoc major-mode rtog/mode-repl-alist ))))
+    (if (and --mode-cmd (functionp --mode-cmd))
+        (progn 
+          (funcall --mode-cmd)
+          (setq rtog/--last-buffer --buffer)
+          (if code
+              (progn 
+                (goto-char (point-max))
+                (insert code)))))))
 
 ;; interactive functions
 
@@ -177,8 +177,8 @@ the whole current buffer.
 "
   (interactive "p")
   (if rtog/--last-buffer
-	  (rtog/--switch-to-buffer)
-	(rtog/--switch-to-repl (rtog/pass-code passAlong?))))
+      (rtog/--switch-to-buffer)
+    (rtog/--switch-to-repl (rtog/pass-code passAlong?))))
 
 ;; hook into comint modes no matter what
 (defun rtog/activate ()
