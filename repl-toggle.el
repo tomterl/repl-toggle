@@ -103,7 +103,7 @@ modes with a repl command."
 ;; set fullscreen advice if wanted
 (eval-after-load "repl-toggle"
   `(if rtog/fullscreen
-	   (efullscreen rtog/--switch-to-repl rtog/--switch-to-buffer :rtog-repl-fullscreen nil)))
+       (fullframe rtog/--switch-to-repl rtog/--switch-to-buffer :rtog-repl-fullscreen nil)))
 
 ;; variables
 (defvar rtog/--last-buffer nil
