@@ -17,6 +17,7 @@ There are no repl/mode combinations preconfigured, put something like
 the following in your emacs setup for php and elisp repl:
 
 #+BEGIN_SRC emacs-lisp
+  (setq rtog/fullscreen t)
   (require 'repl-toggle)
   (setq rtog/mode-repl-alist '((php-mode . php-boris) (emacs-lisp-mode . ielm)))
 #+END_SRC
