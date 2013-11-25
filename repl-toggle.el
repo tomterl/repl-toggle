@@ -69,6 +69,7 @@
 ;;
 ;;; Code:
 
+(require 'fullframe)
 ;; customization
 
 (defcustom rtog/fullscreen nil
