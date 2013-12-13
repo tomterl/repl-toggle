@@ -40,7 +40,7 @@ update the documentation.
 
 When you supply the universal prefix argument to the switching function,
 
-- C-u passes the current line
+- C-u passes the current line or active region
 - C-u C-u passes the current defun
 - C-u C-u C-u passes the the whole current buffer
 
