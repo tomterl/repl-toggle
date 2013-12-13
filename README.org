@@ -34,7 +34,7 @@ update the documentation.
 - ~(emacs-lisp-mode . ielm)~
 - ~(elixir-mode . elixir-mode-iex)~
 - ~(ruby-mode . inf-ruby)~
-- ~(js2-mode . nodejs-repl) AND (js3-mode . nodejs-repl)~
+- ~(js2-mode . nodejs-repl)~ and ~(js3-mode . nodejs-repl)~
 
 ** Pass code at point to the REPL
 
