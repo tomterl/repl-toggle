@@ -73,14 +73,14 @@
 ;; customization
 
 (defcustom rtog/fullscreen nil
-  "Show REPL-buffers as single frame. This setting must be true
-before this mode is loaded!"
+  "Show REPL-buffers as single frame.
+This setting must be true before this mode is loaded!"
   :type '(boolean)
   :group 'repl-toggle)
 
 (defcustom rtog/mode-repl-alist ()
-  "List of cons `(major-mode . repl-command)`, associating major
-modes with a repl command."
+  "List of cons `(major-mode . repl-command)`.
+It associates major modes with a repl command."
   :type '(alist :key-type symbol :value-type function)
   :group 'repl-toggle)
 
@@ -107,14 +107,15 @@ modes with a repl command."
 
 ;; variables
 (defvar rtog/--last-buffer nil
-  "store the jump source in repl buffer")
+  "Store the jump source in repl buffer.")
 (make-variable-buffer-local 'rtog/--last-buffer) 
 
 ;; internal functions
 
 (defun rtog/pass-code (passAlong?)
-  "Depending on PASSALONG? return the current line or region,
-function or definition or the whole current buffer.
+  "Return context depending on PASSALONG?.
+Return the current line or region, function or definition or the
+whole current buffer.
 
 Passing of the buffer respects narrowing." 
   (case passAlong?
@@ -127,8 +128,7 @@ Passing of the buffer respects narrowing."
     (64 (buffer-substring-no-properties (point-min) (point-max)))))
 
 (defun rtog/--switch-to-buffer ()
-  "If `rtog/--last-buffer` is non nil, switch to the buffer
-identified by it."
+  "If `rtog/--last-buffer` is non nil, switch to this buffer."
   (if (and rtog/--last-buffer
            (buffer-live-p rtog/--last-buffer))
       (switch-to-buffer rtog/--last-buffer)
@@ -136,14 +136,17 @@ identified by it."
 
 
 (defun rtog/--switch-to-repl (&optional code &rest ignored)
-  "If `rtog/mode-repl-map` contains an entry for the `major-mode`
+  "Switch to a repl if defined for the current mode.
+
+If `rtog/mode-repl-map` contains an entry for the `major-mode`
 of the current buffer, call the value as function.
 
 This assumes that the command executed will start a new repl, or
 switch to an already running process.
  
 Any text passed as CODE will be pasted in the repl buffer.
-"
+
+Additional paramters passed will be IGNORED."
   (let ((--buffer (current-buffer))
         (--mode-cmd  (cdr (assoc major-mode rtog/mode-repl-alist ))))
     (if (and --mode-cmd (functionp --mode-cmd))
@@ -159,22 +162,26 @@ Any text passed as CODE will be pasted in the repl buffer.
 
 ;;;###autoload
 (defun rtog/add-repl (mode repl-cmd)
-  "If in a buffer with major-mode MODE, execute REPL-CMD when
-  `rtog/toggle-repl is called´."
+  "Associate MODE with REPL-CMD at runtime..
+
+If in a buffer with `major-mode' MODE, execute REPL-CMD when
+`rtog/toggle-repl' is called."
   (interactive "Mmajor mode? \narepl function? ")
   (add-to-list rtog/mode-repl-alist '(mode . repl-cmd) ))
 
 ;;;###autoload
 (defun rtog/toggle-repl (&optional passAlong? &rest ignored)
-  "Switch to the repl asscociated with the major mode of the
-current buffer. If in a repl already switch back to the buffer we
+  "Switch to the repl asscociated with the current major mode.
+
+If in a repl already switch back to the buffer we
 came from.
 
-If you provide a prefix with C-u, the current line or region is
-passed to the repl buffer, using C-u C-u the current function or
-definition is passed, and finaly using C-u C-u C-u you can pass
-the whole current buffer.
-"
+If you provide PASSALONG? as a prefix with \\<C-u>, the current
+line or region is passed to the repl buffer, using \\<C-u C-u> the
+current function or definition is passed, and finaly using \\<C-u
+C-u C-u> you can pass the whole current buffer.
+
+Additional paramters passed will be IGNORED."
   (interactive "p")
   (if rtog/--last-buffer
       (rtog/--switch-to-buffer)
