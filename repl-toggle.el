@@ -27,7 +27,7 @@
 ;;
 ;; This is a generalization of an idea by Mickey Petersen of
 ;; masteringemacs fame: Use one keystroke to jump from a code buffer
-;; to the corresponding repl buffer and back again. This works even if
+;; to the corresponding repl buffer and back again.  This works even if
 ;; you do other stuff in between, as the last buffer used to jump to a
 ;; repl is stored in a buffer local variable in the repl buffer.
 ;;
@@ -35,7 +35,7 @@
 ;; will switch to an already open repl buffer if it exists.
 ;;
 ;; There are no repl/mode combinations preconfigured, put something
-;; like the following in your emacs setup for php and elisp repl:
+;; like the following in your Emacs setup for php and elisp repl:
 ;;
 ;;     (require 'repl-toggle)
 ;;     (setq rtog/mode-repl-alist '((php-mode . php-boris) (emacs-lisp-mode . ielm)))
@@ -43,7 +43,7 @@
 ;; This defines a global minor mode, indicated at with 'rt' in the modeline, that
 ;; grabs "C-c C-z" as repl toggling keybinding.
 ;;
-;; I don't know with wich repl modes this actualy works. If you use
+;; I don't know with wich repl modes this actualy works.  If you use
 ;; this mode, please tell me your rtog/mode-repl-alist, so that I can
 ;; update the documentation.
 ;;
