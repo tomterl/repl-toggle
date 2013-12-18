@@ -176,10 +176,13 @@ If in a buffer with `major-mode' MODE, execute REPL-CMD when
 If in a repl already switch back to the buffer we
 came from.
 
-If you provide PASSALONG? as a prefix with \\<C-u>, the current
-line or region is passed to the repl buffer, using \\<C-u C-u> the
-current function or definition is passed, and finaly using \\<C-u
-C-u C-u> you can pass the whole current buffer.
+If you provide PASSALONG? as a universal prefix with
+\\[universal-argument], the current line or region is passed to
+the repl buffer, using \\[universal-argument]
+\\[universal-argument] the current function or definition is
+passed, and finaly using
+\\[universal-argument]\\[universal-argument]\\[universal-argument]
+you can pass the whole current buffer.
 
 Additional paramters passed will be IGNORED."
   (interactive "p")
