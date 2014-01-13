@@ -70,6 +70,7 @@
 ;;; Code:
 
 (require 'fullframe)
+
 ;; customization
 
 (defcustom rtog/fullscreen nil
@@ -108,7 +109,7 @@ It associates major modes with a repl command."
 ;; variables
 (defvar rtog/--last-buffer nil
   "Store the jump source in repl buffer.")
-(make-variable-buffer-local 'rtog/--last-buffer) 
+(make-variable-buffer-local 'rtog/--last-buffer)
 
 ;; internal functions
 
@@ -117,7 +118,7 @@ It associates major modes with a repl command."
 Return the current line or region, function or definition or the
 whole current buffer.
 
-Passing of the buffer respects narrowing." 
+Passing of the buffer respects narrowing."
   (case passAlong?
     (4 (if (use-region-p)
            (buffer-substring-no-properties
