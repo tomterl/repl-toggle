@@ -6,7 +6,7 @@
 ;; Maintainer: Tom Regner <tom@goochesa.de>
 ;; Version: 0.1.0
 ;; Keywords: repl, buffers, toggle
-;; Package-Requires: ((fullframe  "0.0.1"))
+;; Package-Requires: ((fullframe  "0.0.4"))
 
 ;;  This file is NOT part of GNU Emacs
 
@@ -104,7 +104,7 @@ It associates major modes with a repl command."
 ;; set fullscreen advice if wanted
 (eval-after-load "repl-toggle"
   `(if rtog/fullscreen
-       (fullframe rtog/--switch-to-repl rtog/--switch-to-buffer :rtog-repl-fullscreen nil)))
+       (fullframe rtog/--switch-to-repl rtog/--switch-to-buffer nil)))
 
 ;; variables
 (defvar rtog/--last-buffer nil
