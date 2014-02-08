@@ -6,7 +6,7 @@
 ;; Maintainer: Tom Regner <tom@goochesa.de>
 ;; Version: 0.1.0
 ;; Keywords: repl, buffers, toggle
-;; Package-Requires: ((fullframe  "0.0.4"))
+;; Package-Requires: ((fullframe  "0.0.5"))
 
 ;;  This file is NOT part of GNU Emacs
 

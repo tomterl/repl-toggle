@@ -2,7 +2,7 @@
 
 (package-file "repl-toggle.el")
 
-(depends-on "fullframe" "0.0.4")
+(depends-on "fullframe" "0.0.5")
 
 (development
  (depends-on "ecukes")
