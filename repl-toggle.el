@@ -85,6 +85,13 @@ It associates major modes with a repl command."
   :type '(alist :key-type symbol :value-type function)
   :group 'repl-toggle)
 
+;; variables
+(defvar rtog/--last-buffer nil
+  "Store the jump source in repl buffer.")
+(make-variable-buffer-local 'rtog/--last-buffer)
+
+(defvar rtog/--framed nil
+  "Only advise with fullframe once")
 
 ;; minor mode
 (defvar repl-toggle-mode-map
@@ -100,16 +107,6 @@ It associates major modes with a repl command."
   :lighter " rt"
   :keymap repl-toggle-mode-map
   :global t)
-
-;; set fullscreen advice if wanted
-(eval-after-load "repl-toggle"
-  `(if rtog/fullscreen
-       (fullframe rtog/--switch-to-repl rtog/--switch-to-buffer nil)))
-
-;; variables
-(defvar rtog/--last-buffer nil
-  "Store the jump source in repl buffer.")
-(make-variable-buffer-local 'rtog/--last-buffer)
 
 ;; internal functions
 
@@ -187,9 +184,14 @@ you can pass the whole current buffer.
 
 Additional paramters passed will be IGNORED."
   (interactive "p")
-  (if rtog/--last-buffer
+  (progn
+    (when (and rtog/fullscreen (not rtog/--framed))
+      (progn ; set fullscreen advice if wanted
+        (setq rtog/--framed t)
+        (fullframe rtog/--switch-to-repl rtog/--switch-to-buffer nil)))
+    (if rtog/--last-buffer
       (rtog/--switch-to-buffer)
-    (rtog/--switch-to-repl (rtog/pass-code passAlong?))))
+    (rtog/--switch-to-repl (rtog/pass-code passAlong?)))))
 
 ;; hook into comint modes no matter what
 (defun rtog/activate ()
