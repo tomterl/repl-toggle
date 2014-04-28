@@ -85,6 +85,11 @@ It associates major modes with a repl command."
   :type '(alist :key-type symbol :value-type function)
   :group 'repl-toggle)
 
+(defcustom rtog/goto-buffer-fun 'switch-to-buffer
+  "Function to call to switch from repl to buffer."
+  :type 'function
+  :group 'repl-toggle)
+
 ;; variables
 (defvar rtog/--last-buffer nil
   "Store the jump source in repl buffer.")
@@ -129,7 +134,7 @@ Passing of the buffer respects narrowing."
   "If `rtog/--last-buffer` is non nil, switch to this buffer."
   (if (and rtog/--last-buffer
            (buffer-live-p rtog/--last-buffer))
-      (switch-to-buffer rtog/--last-buffer)
+      (funcall rtog/goto-buffer-fun rtog/--last-buffer)
     (setq rtog/--last-buffer nil)))
 
 
