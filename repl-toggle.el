@@ -91,7 +91,7 @@ It associates major modes with a repl command."
 (make-variable-buffer-local 'rtog/--last-buffer)
 
 (defvar rtog/--framed nil
-  "Only advise with fullframe once")
+  "Only advise with fullframe once.")
 
 ;; minor mode
 (defvar repl-toggle-mode-map
