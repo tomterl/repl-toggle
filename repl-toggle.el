@@ -170,7 +170,7 @@ Takes a list of symbols NAMES and defines `cl-gensym' variables in a `let'
 
 Example:
 
-\(fullframe/with-gensym (one two three)
+\(rtog/with-gensym (one two three)
   (progn
     `(let ((,one \"one\")
           (,two \"two\")
@@ -188,11 +188,12 @@ Instead of
     (message \"%s:%s:%s\\n\" ,one ,two ,three)))
 
 Idea attributed to Peter Seibel where I found it, but since I
-found it in Paul Grahams On lisp, I guess it's either atributable
+found it in Paul Grahams On lisp, I guess it's either attributable
 to him or common lispers knowledge."
+  (declare (indent defun))
   `(let
        ,(cl-loop for n in names collect
-                 `(,n (cl-gensym (concat "fullframe/--"
+                 `(,n (cl-gensym (concat "rtog/--"
                                          (symbol-name (quote ,n))))))
      ,@body))
 ;; API
