@@ -156,6 +156,57 @@ Additional paramters passed will be IGNORED."
                 (goto-char (point-max))
                 (insert code)))))))
 
+(defmacro rtog/with-gensym (names &rest body)
+  "Make macros relying on multiple `cl-gensym' calls more readable.
+Takes a list of symbols NAMES and defines `cl-gensym' variables in a `let'
+  that has BODY as body.
+
+Example:
+
+\(fullframe/with-gensym (one two three)
+  (progn
+    `(let ((,one \"one\")
+          (,two \"two\")
+          (,three \"three\"))
+    (message \"%s:%s:%s\\n\" ,one ,two ,three))\)
+
+Instead of
+
+\(let ((one (cl-gensym \"sym-one\"))
+       (two (cl-gensym \"sym-two\"))
+       (three (cl-gensym \"sym-three\")))
+  `(let ((,one \"one\")
+        (,two \"two\")
+        (,three \"three\"))
+    (message \"%s:%s:%s\\n\" ,one ,two ,three)))
+
+Idea attributed to Peter Seibel where I found it, but since I
+found it in Paul Grahams On lisp, I guess it's either atributable
+to him or common lispers knowledge."
+  `(let
+       ,(cl-loop for n in names collect
+                 `(,n (cl-gensym (concat "fullframe/--"
+                                         (symbol-name (quote ,n))))))
+     ,@body))
+;; API
+
+;;;###autoload
+(defmacro rtog/switch-to-shell-buffer (buffer-name shell-command &optional shell-args)
+      "Make sure that `BUFFER-NAME' exists and is displayed.
+
+Executes `SHELL-COMMAND', passing `SHELL-ARGS', if buffer
+`BUFFER-NAME' doesn't exist."
+     
+      (rtog/with-gensym (bname shcomm args)
+                        `(let ((,bname ,buffer-name)
+                               (,shcomm ,shell-command)
+                               (,args ,shell-args))
+                           `(lambda ()
+                              (if (get-buffer ,,bname)
+                                  (switch-to-buffer (get-buffer ,,bname))
+                                (apply ,,shcomm ,,args))))))
+
+
 ;; interactive functions
 
 ;;;###autoload
