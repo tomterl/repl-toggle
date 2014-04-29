@@ -205,14 +205,14 @@ to him or common lispers knowledge."
 Executes `SHELL-COMMAND', passing `SHELL-ARGS', if buffer
 `BUFFER-NAME' doesn't exist."
      
-      (rtog/with-gensym (bname shcomm args)
-                        `(let ((,bname ,buffer-name)
-                               (,shcomm ,shell-command)
-                               (,args ,shell-args))
-                           `(lambda ()
-                              (if (get-buffer ,,bname)
-                                  (switch-to-buffer (get-buffer ,,bname))
-                                (apply ,,shcomm ,,args))))))
+      (rtog/with-gensym (fun bname shcomm args)
+        `(let ((,bname ,buffer-name)
+               (,shcomm ,shell-command)
+               (,args ,shell-args))
+           `(lambda ()
+              (if (get-buffer ,,bname)
+                  (switch-to-buffer (get-buffer ,,bname))
+                (apply ,,shcomm ,,args))))))
 
 
 ;; interactive functions
@@ -224,7 +224,7 @@ Executes `SHELL-COMMAND', passing `SHELL-ARGS', if buffer
 If in a buffer with `major-mode' MODE, execute REPL-CMD when
 `rtog/toggle-repl' is called."
   (interactive "Mmajor mode? \narepl function? ")
-  (add-to-list rtog/mode-repl-alist '(mode . repl-cmd) ))
+  (add-to-list 'rtog/mode-repl-alist (cons mode repl-cmd)))
 
 ;;;###autoload
 (defun rtog/toggle-repl (&optional passAlong? &rest ignored)
