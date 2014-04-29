@@ -228,7 +228,7 @@ Executes `SHELL-COMMAND', passing `SHELL-ARGS', if buffer
            `(lambda ()
               (if (get-buffer ,,bname)
                   (funcall rtog/goto-buffer-fun (get-buffer ,,bname))
-                (apply ,,shcomm ,,args))))))
+                (apply ',,shcomm ,,args))))))
 
 
 ;; interactive functions
