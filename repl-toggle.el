@@ -76,8 +76,10 @@
 ;; 
 ;; ~(setq rtog/goto-buffer-fun 'pop-to-buffer)~
 ;;
-;; If the mode you want to use doesn't jump to an existing repl-buffer, but always starts a new one, you can
-;; use `rtog/switch-to-shell-buffer' in your configuration to get that behaviour, e.g. for `octave-mode':
+;; If the mode you want to use doesn't jump to an existing
+;; repl-buffer, but always starts a new one, you can use
+;; `rtog/switch-to-shell-buffer' in your configuration to get that
+;; behaviour, e.g. for `octave-mode':
 ;;
 ;; (rtog/add-repl 'octave-mode (rtog/switch-to-shell-buffer 'inferior-octave-buffer 'inferior-octave))
 ;;
