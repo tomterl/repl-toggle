@@ -67,6 +67,20 @@
 ;; frame, restoring the window-layout on stwitching back to the
 ;; buffer.
 ;;
+;; Emacs -- of course -- has more than one function to switch
+;; between buffers. You can customize ~rtog/goto-buffer-fun~ to
+;; accommodate your needs. The default is ~switch-to-buffer~; to
+;; move focus to another frame that already shows the other buffer,
+;; instead of switching the current frame to it, use
+;; ~pop-to-buffer~.
+;; 
+;; ~(setq rtog/goto-buffer-fun 'pop-to-buffer)~
+;;
+;; If the mode you want to use doesn't jump to an existing repl-buffer, but always starts a new one, you can
+;; use `rtog/switch-to-shell-buffer' in your configuration to get that behaviour, e.g. for `octave-mode':
+;;
+;; (rtog/add-repl 'octave-mode (rtog/switch-to-shell-buffer 'inferior-octave-buffer 'inferior-octave))
+;;
 ;;; Code:
 
 (require 'fullframe)
