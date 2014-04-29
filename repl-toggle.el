@@ -159,7 +159,9 @@ Additional paramters passed will be IGNORED."
           (if code
               (progn 
                 (goto-char (point-max))
-                (insert code)))))))
+                (insert code)))
+          )
+      (message "--mode-cmd silly? %s" --mode-cmd))))
 
 (defmacro rtog/with-gensym (names &rest body)
   "Make macros relying on multiple `cl-gensym' calls more readable.
