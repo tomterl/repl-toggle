@@ -211,7 +211,7 @@ Executes `SHELL-COMMAND', passing `SHELL-ARGS', if buffer
                (,args ,shell-args))
            `(lambda ()
               (if (get-buffer ,,bname)
-                  (switch-to-buffer (get-buffer ,,bname))
+                  (funcall rtog/goto-buffer-fun (get-buffer ,,bname))
                 (apply ,,shcomm ,,args))))))
 
 
