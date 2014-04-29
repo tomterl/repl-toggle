@@ -23,10 +23,20 @@ the following in your emacs setup for php and elisp repl:
 #+END_SRC
 
 This defines a global minor mode, indicated with 'rt' in the modeline, that
-grabs "C-c C-z" as repl toggling keybinding.
-I don't know with which repl modes this actualy works. If you use
-this mode, please tell me your rtog/mode-repl-alist, so that I can
+grabs "C-c C-z" as repl toggling key-binding.
+I don't know with which repl modes this actually works. If you use
+this mode, please tell me your ~rtog/mode-repl-alist~, so that I can
 update the documentation.
+
+** ~pop~ or ~switch~: ~rtog/goto-buffer-fun~
+
+Emacs -- of course -- has more than one function to switch between
+buffers. You can customize ~rtog/goto-buffer-fun~ to accommodate your
+needs. The default is ~switch-to-buffer~; to move focus to another
+frame that already shows the other buffer, instead of switching the
+current frame to it, use ~pop-to-buffer~.
+
+~(setq rtog/goto-buffer-fun 'pop-to-buffer)~
 
 ** Configurations known to work
 
@@ -49,7 +59,7 @@ to the repl buffer you switch to.
 ** fullscreen REPL
 If you set =rtog/fullscreen= to true, /prior/ to loading this module,
 the repl-commands will be executed fullscreen, i.e. as single frame,
-restoring the window-layout on stwitching back to the originating
+restoring the window-layout on switching back to the originating
 buffer.
 
 ~(setq rtog/fullscreen t)~
