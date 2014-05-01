@@ -46,6 +46,16 @@ current frame to it, use ~pop-to-buffer~.
 - ~(ruby-mode . inf-ruby)~
 - ~(js2-mode . nodejs-repl)~ and ~(js3-mode . nodejs-repl)~
 
+*** Switch to shell buffer
+
+If the mode you want to use doesn't jump to an existing repl-buffer,
+but always starts a new one, you can use `rtog/switch-to-shell-buffer'
+in your configuration to get that behaviour, e.g. for `octave-mode':
+
+#+BEGIN_SRC emacs-lisp
+  (rtog/add-repl 'octave-mode (rtog/switch-to-shell-buffer 'inferior-octave-buffer 'inferior-octave))
+#+END_SRC
+
 ** Pass code at point to the REPL
 
 When you supply the universal prefix argument to the switching function,

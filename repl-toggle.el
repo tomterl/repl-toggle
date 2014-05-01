@@ -4,7 +4,7 @@
 
 ;; Author: Tom Regner <tom@goochesa.de>
 ;; Maintainer: Tom Regner <tom@goochesa.de>
-;; Version: 0.1.1
+;; Version: 0.2.0
 ;; Keywords: repl, buffers, toggle
 ;; Package-Requires: ((fullframe  "0.0.5"))
 
@@ -66,6 +66,22 @@
 ;; the repl-commands will be executed fullscreen, i.e. as single
 ;; frame, restoring the window-layout on stwitching back to the
 ;; buffer.
+;;
+;; Emacs -- of course -- has more than one function to switch
+;; between buffers. You can customize ~rtog/goto-buffer-fun~ to
+;; accommodate your needs. The default is ~switch-to-buffer~; to
+;; move focus to another frame that already shows the other buffer,
+;; instead of switching the current frame to it, use
+;; ~pop-to-buffer~.
+;; 
+;; ~(setq rtog/goto-buffer-fun 'pop-to-buffer)~
+;;
+;; If the mode you want to use doesn't jump to an existing
+;; repl-buffer, but always starts a new one, you can use
+;; `rtog/switch-to-shell-buffer' in your configuration to get that
+;; behaviour, e.g. for `octave-mode':
+;;
+;; (rtog/add-repl 'octave-mode (rtog/switch-to-shell-buffer 'inferior-octave-buffer 'inferior-octave))
 ;;
 ;;; Code:
 
@@ -159,7 +175,61 @@ Additional paramters passed will be IGNORED."
           (if code
               (progn 
                 (goto-char (point-max))
-                (insert code)))))))
+                (insert code)))
+          )
+      (message "--mode-cmd silly? %s" --mode-cmd))))
+
+(defmacro rtog/with-gensym (names &rest body)
+  "Make macros relying on multiple `cl-gensym' calls more readable.
+Takes a list of symbols NAMES and defines `cl-gensym' variables in a `let'
+  that has BODY as body.
+
+Example:
+
+\(rtog/with-gensym (one two three)
+  (progn
+    `(let ((,one \"one\")
+          (,two \"two\")
+          (,three \"three\"))
+    (message \"%s:%s:%s\\n\" ,one ,two ,three))\)
+
+Instead of
+
+\(let ((one (cl-gensym \"sym-one\"))
+       (two (cl-gensym \"sym-two\"))
+       (three (cl-gensym \"sym-three\")))
+  `(let ((,one \"one\")
+        (,two \"two\")
+        (,three \"three\"))
+    (message \"%s:%s:%s\\n\" ,one ,two ,three)))
+
+Idea attributed to Peter Seibel where I found it, but since I
+found it in Paul Grahams On lisp, I guess it's either attributable
+to him or common lispers knowledge."
+  (declare (indent defun))
+  `(let
+       ,(cl-loop for n in names collect
+                 `(,n (cl-gensym (concat "rtog/--"
+                                         (symbol-name (quote ,n))))))
+     ,@body))
+;; API
+
+;;;###autoload
+(defmacro rtog/switch-to-shell-buffer (buffer-name shell-command &optional shell-args)
+      "Make sure that `BUFFER-NAME' exists and is displayed.
+
+Executes `SHELL-COMMAND', passing `SHELL-ARGS', if buffer
+`BUFFER-NAME' doesn't exist."
+     
+      (rtog/with-gensym (fun bname shcomm args)
+        `(let ((,bname ,buffer-name)
+               (,shcomm ,shell-command)
+               (,args ,shell-args))
+           `(lambda ()
+              (if (get-buffer ,,bname)
+                  (funcall rtog/goto-buffer-fun (get-buffer ,,bname))
+                (apply ',,shcomm ,,args))))))
+
 
 ;; interactive functions
 
@@ -170,7 +240,7 @@ Additional paramters passed will be IGNORED."
 If in a buffer with `major-mode' MODE, execute REPL-CMD when
 `rtog/toggle-repl' is called."
   (interactive "Mmajor mode? \narepl function? ")
-  (add-to-list rtog/mode-repl-alist '(mode . repl-cmd) ))
+  (add-to-list 'rtog/mode-repl-alist (cons mode repl-cmd)))
 
 ;;;###autoload
 (defun rtog/toggle-repl (&optional passAlong? &rest ignored)
