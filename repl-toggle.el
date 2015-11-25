@@ -6,7 +6,7 @@
 ;; Maintainer: Tom Regner <tom@goochesa.de>
 ;; Version: 0.2.0
 ;; Keywords: repl, buffers, toggle
-;; Package-Requires: ((fullframe  "0.0.5"))
+;; Package-Requires: ((fullframe  "0.0.5") (cl-lib "0.5"))
 
 ;;  This file is NOT part of GNU Emacs
 
@@ -86,6 +86,7 @@
 ;;; Code:
 
 (require 'fullframe)
+(require 'cl-lib)
 
 ;; customization
 
@@ -137,7 +138,7 @@ Return the current line or region, function or definition or the
 whole current buffer.
 
 Passing of the buffer respects narrowing."
-  (case passAlong?
+  (cl-case passAlong?
     (4 (if (use-region-p)
            (buffer-substring-no-properties
             (region-beginning)
