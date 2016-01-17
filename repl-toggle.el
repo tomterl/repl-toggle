@@ -223,19 +223,19 @@ to him or common lispers knowledge."
 
 ;;;###autoload
 (defmacro rtog/switch-to-shell-buffer (buffer-name shell-command &optional shell-args)
-      "Make sure that `BUFFER-NAME' exists and is displayed.
+  "Make sure that `BUFFER-NAME' exists and is displayed.
 
 Executes `SHELL-COMMAND', passing `SHELL-ARGS', if buffer
 `BUFFER-NAME' doesn't exist."
-     
-      (rtog/with-gensym (fun bname shcomm args)
-        `(let ((,bname ,buffer-name)
-               (,shcomm ,shell-command)
-               (,args ,shell-args))
-           `(lambda ()
-              (if (get-buffer ,,bname)
-                  (funcall rtog/goto-buffer-fun (get-buffer ,,bname))
-                (apply ',,shcomm ,,args))))))
+  
+  (rtog/with-gensym (fun bname shcomm args)
+    `(let ((,bname ,buffer-name)
+           (,shcomm ,shell-command)
+           (,args ,shell-args))
+       `(lambda ()
+          (if (get-buffer ,,bname)
+              (funcall rtog/goto-buffer-fun (get-buffer ,,bname))
+            (apply ',,shcomm ,,args))))))
 
 
 ;; interactive functions
@@ -272,8 +272,8 @@ Additional paramters passed will be IGNORED."
         (setq rtog/--framed t)
         (fullframe rtog/--switch-to-repl rtog/--switch-to-buffer nil)))
     (if rtog/--last-buffer
-      (rtog/--switch-to-buffer)
-    (rtog/--switch-to-repl (rtog/pass-code passAlong?)))))
+        (rtog/--switch-to-buffer)
+      (rtog/--switch-to-repl (rtog/pass-code passAlong?)))))
 
 ;; hook into comint modes no matter what
 (defun rtog/activate ()
