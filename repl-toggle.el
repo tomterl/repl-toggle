@@ -86,7 +86,8 @@
 ;;; Code:
 
 (require 'fullframe)
-
+(eval-when-compile
+  (require 'cl))
 ;; customization
 
 (defcustom rtog/fullscreen nil
