@@ -4,7 +4,7 @@
 
 ;; Author: Tom Regner <tom@goochesa.de>
 ;; Maintainer: Tom Regner <tom@goochesa.de>
-;; Version: 0.2.0
+;; Version: 0.3.0
 ;; Keywords: repl, buffers, toggle
 ;; Package-Requires: ((fullframe  "0.0.5"))
 
@@ -107,6 +107,11 @@ It associates major modes with a repl command."
   :type 'function
   :group 'repl-toggle)
 
+(defcustom rtog/fallback-repl-fun nil
+  "Function to call if no repl is configured for the current buffer mode."
+  :type 'function
+  :group 'repl-toggle)
+
 ;; variables
 (defvar rtog/--last-buffer nil
   "Store the jump source in repl buffer.")
@@ -178,7 +183,9 @@ Additional paramters passed will be IGNORED."
                 (goto-char (point-max))
                 (insert code)))
           )
-      (message "--mode-cmd silly? %s" --mode-cmd))))
+      (if (functionp 'rtog/fallback-repl)
+          (funcall 'rtog/fallback-repl code ignored)
+        (message "--mode-cmd silly? %s" --mode-cmd)))))
 
 (defmacro rtog/with-gensym (names &rest body)
   "Make macros relying on multiple `cl-gensym' calls more readable.
