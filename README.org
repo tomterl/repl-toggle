@@ -1,4 +1,6 @@
 * Switch from code buffers to the corresponding REPL
+[[http:/stable.melpa.org/#/repl-toggle][file:http://stable.melpa.org/packages/repl-toggle-badge.svg]]
+[[http://melpa.org/#/repl-toggle][file:http://melpa.org/packages/repl-toggle-badge.svg]]
 
 This is a generalization of an idea by Mickey Petersen of
 masteringemacs fame:
