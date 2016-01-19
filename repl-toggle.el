@@ -172,7 +172,7 @@ switch to an already running process.
 Any text passed as CODE will be pasted in the repl buffer.
 
 If no repl-function is associated with the curent major mode, the
-custom variable `rtog/fallback-repl' will be called if it is non
+custom variable `rtog/fallback-repl-fun' will be called if it is non
 `nil'.
 
 Additional paramters passed will be IGNORED."
@@ -187,8 +187,8 @@ Additional paramters passed will be IGNORED."
                 (goto-char (point-max))
                 (insert code)))
           )
-      (if (functionp 'rtog/fallback-repl)
-          (funcall 'rtog/fallback-repl code ignored)
+      (if (functionp 'rtog/fallback-repl-fun)
+          (funcall 'rtog/fallback-repl-fun code ignored)
         (message "--mode-cmd silly? %s" --mode-cmd)))))
 
 (defmacro rtog/with-gensym (names &rest body)
