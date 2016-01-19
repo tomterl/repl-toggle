@@ -171,6 +171,10 @@ switch to an already running process.
  
 Any text passed as CODE will be pasted in the repl buffer.
 
+If no repl-function is associated with the curent major mode, the
+custom variable `rtog/fallback-repl' will be called if it is non
+`nil'.
+
 Additional paramters passed will be IGNORED."
   (let ((--buffer (current-buffer))
         (--mode-cmd  (cdr (assoc major-mode rtog/mode-repl-alist ))))
