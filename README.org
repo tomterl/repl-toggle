@@ -54,8 +54,16 @@ If the mode you want to use doesn't jump to an existing repl-buffer,
 but always starts a new one, you can use `rtog/switch-to-shell-buffer'
 in your configuration to get that behaviour, e.g. for `octave-mode':
 
+**** ~octave~
+
 #+BEGIN_SRC emacs-lisp
   (rtog/add-repl 'octave-mode (rtog/switch-to-shell-buffer 'inferior-octave-buffer 'inferior-octave))
+#+END_SRC
+
+**** ~groovy~
+
+#+BEGIN_SRC emacs-lisp
+(rtog/add-repl 'groovy-mode (rtog/switch-to-shell-buffer "*groovy*" 'run-groovy))
 #+END_SRC
 
 ** Pass code at point to the REPL
