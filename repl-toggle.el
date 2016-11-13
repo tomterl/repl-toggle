@@ -188,6 +188,7 @@ Additional paramters passed will be IGNORED."
               (funcall rtog/goto-buffer-fun rtog/--repl-buffer)
             (progn
               (funcall --mode-cmd)
+              (repl-toggle-mode 1)
               (setq rtog/--last-buffer --buffer)
               (let ((--repl-buffer (current-buffer)))
                 (with-current-buffer --buffer
@@ -293,9 +294,11 @@ Additional paramters passed will be IGNORED."
 ;; hook into comint modes no matter what
 (defun rtog/activate ()
   "Activate the repl-toggle minor mode."
-  (repl-toggle-mode 1))
+  (let ((--mode-cmd  (cdr (assoc major-mode rtog/mode-repl-alist ))))
+    (if (and --mode-cmd (functionp --mode-cmd))
+        (repl-toggle-mode 1))))
 
-(add-hook 'comint-mode-hook 'rtog/activate)
+(add-hook 'prog-mode-hook 'rtog/activate)
 (provide 'repl-toggle)
 
 ;;; repl-toggle.el ends here
