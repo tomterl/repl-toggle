@@ -12,8 +12,8 @@ This works even if you do other stuff in between, as the last buffer
 used to jump to a repl is stored in a buffer local variable in the
 repl buffer.
 
-Currently this assumes that the stored command to start the repl will
-switch to an already open repl buffer if it exists.
+`repl-toggle-mode` will automatically be activated for `prog-mode`
+major modes and configured and the started repl-buffers.
 
 There are no repl/mode combinations preconfigured, put something like
 the following in your emacs setup for php and elisp repl:
@@ -69,10 +69,9 @@ When you supply the universal prefix argument to the switching function,
 to the repl buffer you switch to.
 
 ** fullscreen REPL
-If you set =rtog/fullscreen= to true, /prior/ to loading this module,
-the repl-commands will be executed fullscreen, i.e. as single frame,
-restoring the window-layout on switching back to the originating
-buffer.
+If you set =rtog/fullscreen= to true, the repl-commands will be
+executed fullscreen, i.e. as single frame, restoring the window-layout
+on switching back to the originating buffer.
 
 ~(setq rtog/fullscreen t)~
 ** Fallback REPL function
