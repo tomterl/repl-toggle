@@ -42,7 +42,7 @@ current frame to it, use ~pop-to-buffer~.
 
 ** Configurations known to work
 
-- ~(php-mode . php-boris)~
+- ~(php-mode . psysh)~
 - ~(emacs-lisp-mode . ielm)~
 - ~(elixir-mode . elixir-mode-iex)~
 - ~(ruby-mode . inf-ruby)~
