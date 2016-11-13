@@ -117,6 +117,10 @@ It associates major modes with a repl command."
   "Store the jump source in repl buffer.")
 (make-variable-buffer-local 'rtog/--last-buffer)
 
+(defvar rtog/--repl-buffer nil
+  "Store the repl buffer in the jump source buffer.")
+(make-variable-buffer-local 'rtog/--repl-buffer)
+
 (defvar rtog/--framed nil
   "Only advise with fullframe once.")
 
@@ -180,8 +184,14 @@ Additional paramters passed will be IGNORED."
         (--mode-cmd  (cdr (assoc major-mode rtog/mode-repl-alist ))))
     (if (and --mode-cmd (functionp --mode-cmd))
         (progn 
-          (funcall --mode-cmd)
-          (setq rtog/--last-buffer --buffer)
+          (if (and rtog/--repl-buffer (buffer-live-p rtog/--repl-buffer))
+              (funcall rtog/goto-buffer-fun rtog/--repl-buffer)
+            (progn
+              (funcall --mode-cmd)
+              (setq rtog/--last-buffer --buffer)
+              (let ((--repl-buffer (current-buffer)))
+                (with-current-buffer --buffer
+                  (setq rtog/--repl-buffer --repl-buffer)))))
           (if code
               (progn 
                 (goto-char (point-max))
