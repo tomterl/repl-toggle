@@ -308,7 +308,7 @@ Additional paramters passed will be IGNORED."
         (rtog/--switch-to-buffer)
       (rtog/--switch-to-repl (rtog/pass-code passAlong?)))))
 
-;; hook into comint modes no matter what
+;;;###autoload
 (defun rtog/activate ()
   "Activate the repl-toggle minor mode."
   (let ((--mode-cmd  (cdr (assoc major-mode rtog/mode-repl-alist ))))
