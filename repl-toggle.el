@@ -217,7 +217,7 @@ Additional paramters passed will be IGNORED."
           )
       (if (functionp 'rtog/fallback-repl-fun)
           (funcall 'rtog/fallback-repl-fun code ignored)
-        (message "--mode-cmd silly? %s" --mode-cmd)))))
+        (message "major mode '%s': repl starting command '%s' is not a function" major-mode --mode-cmd)))))
 
 (defmacro rtog/with-gensym (names &rest body)
   "Make macros relying on multiple `cl-gensym' calls more readable.
