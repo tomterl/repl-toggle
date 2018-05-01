@@ -4,7 +4,7 @@
 
 ;; Author: Tom Regner <tom@goochesa.de>
 ;; Maintainer: Tom Regner <tom@goochesa.de>
-;; Version: 0.4.0
+;; Version: 0.5.0
 ;; Keywords: repl, buffers, toggle
 ;; Package-Requires: ((fullframe  "0.0.5"))
 
@@ -154,7 +154,7 @@ It associates major modes with a repl command."
   nil
   :lighter " rt"
   :keymap repl-toggle-mode-map
-  :global t)
+  :global nil)
 
 ;; internal functions
 
