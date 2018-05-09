@@ -47,10 +47,10 @@ current frame to it, use ~pop-to-buffer~.
 - ~(elixir-mode . elixir-mode-iex)~
 - ~(ruby-mode . inf-ruby)~
 - ~(js2-mode . nodejs-repl)~ and ~(js3-mode . nodejs-repl)~
-- ~(intero-mode . intero-repl)~
+- ~(haskell-mode . intero-repl)~
 - ~(scheme-mode . geiser)~
 - ~(lisp-mode. slime)~
-- ~(elpy-mode . elpy-shell-switch-to-shell)~
+- ~(python-mode . elpy-shell-switch-to-shell)~
 
 *** Switch to shell buffer
 
