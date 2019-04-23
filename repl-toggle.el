@@ -204,7 +204,9 @@ Additional paramters passed will be IGNORED."
           (if (and rtog/--repl-buffer (buffer-live-p rtog/--repl-buffer))
               (funcall rtog/goto-buffer-fun rtog/--repl-buffer)
             (progn
-              (funcall --mode-cmd)
+              (if (commandp --mode-cmd)
+                  (call-interactively --mode-cmd)
+                (funcall --mode-cmd))
               (repl-toggle-mode 1)
               (setq rtog/--last-buffer --buffer)
               (let ((--repl-buffer (current-buffer)))
