@@ -91,3 +91,8 @@ on switching back to the originating buffer.
 The custom variable =rtog/fallback-repl= can be customized with a
 function; this function will be called if no REPL is associated with
 the current buffers major mode.
+
+** Call repl-commands interactively
+
+If the custom variable =rtog/interactivep= is set to =t=, repl-commands 
+will be called interactively if possible.
