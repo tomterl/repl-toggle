@@ -129,6 +129,11 @@ It associates major modes with a repl command."
   :type 'function
   :group 'repl-toggle)
 
+(defcustom rtog/interactivep nil
+  "If non-nil then call the repl command interactively if possible."
+  :type 'boolean
+  :group 'repl-toggle)
+
 ;; variables
 (defvar rtog/--last-buffer nil
   "Store the jump source in repl buffer.")
@@ -204,7 +209,10 @@ Additional paramters passed will be IGNORED."
           (if (and rtog/--repl-buffer (buffer-live-p rtog/--repl-buffer))
               (funcall rtog/goto-buffer-fun rtog/--repl-buffer)
             (progn
-              (funcall --mode-cmd)
+              (if (and rtog/interactivep 
+                       (commandp --mode-cmd))
+                  (call-interactively --mode-cmd)
+                (funcall --mode-cmd))
               (repl-toggle-mode 1)
               (setq rtog/--last-buffer --buffer)
               (let ((--repl-buffer (current-buffer)))
