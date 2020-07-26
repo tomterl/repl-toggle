@@ -48,9 +48,15 @@ current frame to it, use ~pop-to-buffer~.
 - ~(ruby-mode . inf-ruby)~
 - ~(js2-mode . nodejs-repl)~ and ~(js3-mode . nodejs-repl)~
 - ~(haskell-mode . intero-repl)~
+- ~(haskell-mode . haskell-interactive-switch)~
 - ~(scheme-mode . geiser)~
 - ~(lisp-mode. slime)~
 - ~(python-mode . elpy-shell-switch-to-shell)~
+- ~(typescript-mode . run-ts)~
+- ~(tuareg-mode . utop)~
+- ~(sml-mode . sml-prog-proc-switch-to)~
+- ~(python-mode . run-python)~
+- ~(nix-mode . nix-repl)~
 
 *** Switch to shell buffer
 
