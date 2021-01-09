@@ -106,7 +106,7 @@
 
 (require 'fullframe)
 (eval-when-compile
-  (require 'cl))
+  (require 'cl-lib))
 ;; customization
 
 (defcustom rtog/fullscreen nil
@@ -171,7 +171,7 @@ Return the current line or region, function or definition or the
 whole current buffer.
 
 Passing of the buffer respects narrowing."
-  (case passAlong?
+  (cl-case passAlong?
     (4 (if (use-region-p)
            (buffer-substring-no-properties
             (region-beginning)
